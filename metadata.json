@@ -1,0 +1,7 @@
+{
+  "name": "Erynto AI",
+  "description": "A multi-modal AI assistant named Erynto, capable of text, image, video, and voice interactions with distinct personality modes.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
