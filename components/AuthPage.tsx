@@ -5,7 +5,7 @@ import { Mail, Lock, User, ArrowRight, Loader } from 'lucide-react';
 import { APP_LOGO_URL } from '../constants';
 
 interface AuthPageProps {
-  onAuthSuccess: (user: UserAccount) => void;
+  onAuthSuccess?: (user: UserAccount) => void; // made optional
 }
 
 export const AuthPage: React.FC<AuthPageProps> = ({ onAuthSuccess }) => {
@@ -31,7 +31,13 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onAuthSuccess }) => {
         if (!name.trim()) throw new Error("Name is required.");
         user = signup(email, password, name);
       }
-      onAuthSuccess(user);
+
+      // Safe fallback: only call if provided
+      if (onAuthSuccess) {
+        onAuthSuccess(user);
+      } else {
+        console.log("Auth success:", user);
+      }
     } catch (err: any) {
       setError(err.message || "An error occurred");
     } finally {
@@ -63,8 +69,6 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onAuthSuccess }) => {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          
-          {/* Sign Up Name Field */}
           {!isLogin && (
             <div className="relative group">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
