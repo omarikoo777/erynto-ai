@@ -313,7 +313,10 @@ const App: React.FC = () => {
            imagePart = { inlineData: { data: base64, mimeType: currentImage.file.type } };
         }
 
-        const historyForApi = newMessagesList.map(m => ({
+        // Use 'messages' (the state before this update) to construct history.
+        // This prevents duplication because 'newMessagesList' contains the current message,
+        // and 'sendMessageToGemini' appends the current message again.
+        const historyForApi = messages.map(m => ({
           role: m.role,
           parts: [{ text: m.text }]
         }));
